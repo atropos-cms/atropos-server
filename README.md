@@ -11,7 +11,7 @@ Here are some of the core features for this project:
   - Send emails to users
   - and much more..
 
-# Setup
+## Setup
 
 After cloning this repo, run `npm install`.
 
@@ -23,11 +23,11 @@ Next you can migrate the database:
 node ace migration:run
 ```
 
-# Start Service
+## Start Service
 
 The atropos server consists of 3 components:
 
-## API Server
+### API Server
 
 This serves the main application and http endpoints. You can start is as follows:
 
@@ -35,7 +35,7 @@ This serves the main application and http endpoints. You can start is as follows
 node server.js
 ```
 
-## Queue worker
+### Queue worker
 
 The worker processes all background tasks like creating thumnails for images and sending emails.
 
@@ -43,7 +43,7 @@ The worker processes all background tasks like creating thumnails for images and
 node ace kue:listen
 ```
 
-## Scheduler
+### Scheduler
 
 And finally the scheduler which is responsible for dispatching jobs that need to happen on a regular interval.
 For example optimizing the database or removing old login tokens .
@@ -52,7 +52,7 @@ For example optimizing the database or removing old login tokens .
 node ace run:scheduler
 ```
 
-# Development
+## Development
 
 To make development easier, you can seed the database with sample data:
 
