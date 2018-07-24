@@ -2,7 +2,7 @@
 
 ## This project is still in development, do not use in production yet.
 
-This is Atropos Comminity Software Server. It provides api endpoints to create and manage all aspects of Atropos.
+This is Atropos Community Software Server. It provides api endpoints to create and manage all aspects of Atropos.
 Here are some of the core features for this project:
 
   - Public API to content
