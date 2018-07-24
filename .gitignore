@@ -1,0 +1,18 @@
+#Idea
+.idea
+.vscode
+
+# Node modules
+node_modules
+
+# Adonis directory for storing tmp files
+tmp
+
+# Directory for storing application data
+storage
+
+# Environment variables, never commit this file
+.env
+
+# The development sqlite file
+database/development.sqlite

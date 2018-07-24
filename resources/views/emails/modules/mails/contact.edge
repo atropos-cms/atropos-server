@@ -1,0 +1,20 @@
+@layout('emails/master')
+
+@section('border-color')
+  #efc80d
+@endsection
+
+@section('title')
+  {{ subject }}
+@endsection
+
+@section('raw-header')
+  <h2 style="margin: 0; font-size: 16px; font-weight: normal; letter-spacing: normal; line-height: normal;">
+    {{{ antl.formatMessage('emails.message--modules-mails-contact--greeging', { name: user.full_name, sender, email }) }}}
+  </h2>
+@endsection
+
+@section('content')
+  {{{ content }}}
+@endsection
+
