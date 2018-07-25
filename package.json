@@ -29,9 +29,9 @@
     "@adonisjs/framework": "^5.0.8",
     "@adonisjs/http-logger": "^1.0.0",
     "@adonisjs/ignitor": "^2.0.7",
-    "@adonisjs/lucid": "^5.0.4",
+    "@adonisjs/lucid": "^6.0.1",
     "@adonisjs/lucid-slugify": "^1.0.3",
-    "@adonisjs/mail": "^3.0.7",
+    "@adonisjs/mail": "^3.0.8",
     "@adonisjs/persona": "^1.0.5",
     "@adonisjs/redis": "^2.0.7",
     "@adonisjs/validator": "^5.0.3",
@@ -60,10 +60,10 @@
     "uuid": "^3.3.2"
   },
   "devDependencies": {
-    "eslint": "^5.1.0",
+    "eslint": "^5.2.0",
     "eslint-config-standard": "^11.0.0",
     "eslint-plugin-import": "^2.13.0",
-    "eslint-plugin-node": "^6.0.1",
+    "eslint-plugin-node": "^7.0.1",
     "eslint-plugin-promise": "^3.8.0",
     "eslint-plugin-standard": "^3.1.0",
     "sqlite3": "^4.0.2"
