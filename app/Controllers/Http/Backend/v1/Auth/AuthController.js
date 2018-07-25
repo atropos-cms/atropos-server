@@ -36,6 +36,7 @@ class AuthController {
 
   async get ({auth, request, transform}) {
     this._setLocalPreference(auth.user, request)
+    this._setLastAction(auth.user)
     return transform.item(auth.user, MeTransformer)
   }
 
@@ -62,6 +63,11 @@ class AuthController {
 
   _checkActivated (user) {
     if (!user.activated) throw new Error('E_ACCOUNT_NOT_ACTIVATED: Your account has not been activated yet.')
+  }
+
+  async _setLastAction (user) {
+    user.merge({last_action: new Date()})
+    await user.save()
   }
 
   async _setLastLogin (user) {

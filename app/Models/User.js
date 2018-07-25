@@ -21,7 +21,7 @@ class User extends Model {
   }
 
   static get dates () {
-    return super.dates.concat(['last_login'])
+    return super.dates.concat(['last_login', 'last_action'])
   }
 
   static get hidden () {

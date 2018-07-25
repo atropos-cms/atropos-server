@@ -31,6 +31,7 @@ class UserTransformer extends TransformerAbstract {
       created_at: moment(model.created_at).toISOString(),
       updated_at: moment(model.updated_at).toISOString(),
       last_login: moment(model.last_login).toISOString(),
+      last_action: moment(model.last_action).toISOString(),
 
       full_name: model.getFullName()
     }

@@ -40,6 +40,7 @@ class UserController {
       // create a random, double hashed password for a new user.
       password: await Hash.make(Math.random().toString(36).replace('0.', '')),
       account_status: 'pending',
+      last_action: null,
       last_login: null
     })
 

@@ -15,4 +15,4 @@
 
 const Ws = use('Ws')
 
-Ws.channel('meta', 'MetaController')
+Ws.channel('presence', 'PresenceController').middleware(['auth'])
