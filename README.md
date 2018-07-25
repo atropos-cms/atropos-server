@@ -23,6 +23,22 @@ Next you can migrate the database:
 node ace migration:run
 ```
 
+And finally you fill have to generate an application key:
+```sh
+node ace key:generate
+```
+
+# Installation
+
+After the initial setup you can execute the folowing command to start the install wizzard:
+
+```sh
+node ace install
+```
+
+This wizzard will setup the required settings in the database, as well let you create you initial admin user.
+
+
 ## Start Service
 
 The atropos server consists of 3 components:
@@ -57,6 +73,8 @@ node ace run:scheduler
 To make development easier, you can seed the database with sample data:
 
 ```sh
-node ace migration:refresh; node ace seed
+node ace migration:refresh
+node ace seed
 ```
 
+You can also start the server using the `npm run dev` command, which will watch your files for changes and automatically restart the server when you change something.
