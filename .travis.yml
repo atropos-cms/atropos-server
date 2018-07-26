@@ -11,7 +11,8 @@ sudo: false
 
 before_install:
   - npm install -g npm@latest
-  
+
 install:
   - npm ci
   - touch .env
+  - node ace key:generate

@@ -81,8 +81,9 @@ const aliases = {
 |
 */
 const commands = [
-  'App/Commands/AdminCreate',
   'App/Commands/Install',
+  'App/Commands/KeyGenerate',
+  'App/Commands/AdminCreate',
   'App/Commands/MediaRegenerate'
 ]
 

@@ -1,48 +1,106 @@
 'use strict'
 
-const kue = use('Kue')
-const Redis = use('Redis')
-const Config = use('Config')
-const Database = use('Database')
+const path = require('path')
 const { Command } = require('@adonisjs/ace')
-const File = use('App/Models/Modules/Media/File')
-const Object = use('App/Models/Modules/Files/Object')
-const MediaThumbnailsJob = use('App/Jobs/Modules/Media/Thumbnails')
-const MediaExifJob = use('App/Jobs/Modules/Media/Exif')
-const FilesPreviewJob = use('App/Jobs/Modules/Files/Preview')
 
 class KeyGenerate extends Command {
+  /**
+   * The command signature used by ace
+   *
+   * @method signature
+   *
+   * @return {String}
+   */
   static get signature () {
-    return 'media:regenerate'
+    return `
+    key:generate
+    { -f, --force: Forcefully generate the key in production environment }
+    { --env=@value: .env file location }
+    { -s, --size=@value: The key size which defaults to 64 characters }
+    { --echo: Echo the key instead of writing to the file }
+    `
   }
 
+  /**
+   * The command description used by ace
+   *
+   * @method description
+   *
+   * @return {String}
+   */
   static get description () {
-    return 'This command regenerates all media files thumbnails and exif data'
+    return 'Generate secret key for the app'
   }
 
+  /**
+   * Reads the content of `.env` file and returns it as
+   * an object
+   *
+   * @method getEnvContent
+   *
+   * @param  {String}      envPath
+   *
+   * @return {Object}
+   */
+  async getEnvContent (envPath) {
+    const dotEnvContents = await this.readFile(envPath)
+    return require('dotenv').parse(dotEnvContents)
+  }
+
+  /**
+   * Updates the `.env` file by converting the object back
+   * to a valid string
+   *
+   * @method updateEnvContents
+   *
+   * @param  {String}          envPath
+   * @param  {Object}          envHash
+   *
+   * @return {void}
+   */
+  async updateEnvContents (envPath, envHash) {
+    const updatedContents = Object.keys(envHash).map((key) => {
+      return `${key}=${envHash[key]}`
+    }).join('\n')
+
+    await this.writeFile(envPath, updatedContents)
+  }
+
+  /**
+   * Invoked by ace
+   *
+   * @method handle
+   *
+   * @param  {Object} args
+   * @param  {Object} options
+   *
+   * @return {void}
+   */
   async handle (args, options) {
-    this.info(`Processing media....`)
+    const size = options.size ? Number(options.size) : 64
+    const key = require('randomstring').generate(size)
 
-    let files = (await File.query().where({browsable: true}).fetch()).toJSON()
-    for (let file of files) {
-      this.info(`Processing '${file.id}'....`)
-      await kue.dispatch(MediaThumbnailsJob.key, file, 'low').result
-      await kue.dispatch(MediaExifJob.key, file, 'low').result
+    /**
+     * Echo key to console when echo is set to true
+     * and return
+     */
+    if (options.echo) {
+      console.log(`APP_KEY=${key}`)
+      return
     }
 
-    this.info(`Processing files....`)
+    await this.invoke(async () => {
+      this.ensureCanRunInProduction(options)
+      await this.ensureInProjectRoot()
 
-    let objects = (await Object.query().fetch()).toJSON()
-    for (let file of objects) {
-      this.info(`Processing '${file.id}'....`)
-      await kue.dispatch(FilesPreviewJob.key, file.id, 'low').result
-    }
+      const env = options.env || '.env'
+      const pathToEnv = path.isAbsolute(env) ? env : path.join(process.cwd(), env)
 
-    this.success('All media files processed')
+      const envHash = await this.getEnvContent(pathToEnv)
+      await this.updateEnvContents(pathToEnv, Object.assign(envHash, { APP_KEY: key }))
 
-    await Redis.quit(Config.get('kue.connection'))
-    await Database.close()
-    process.exit(0)
+      this.completed('generated', 'unique APP_KEY')
+    })
   }
 }
 
