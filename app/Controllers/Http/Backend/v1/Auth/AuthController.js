@@ -22,8 +22,11 @@ class AuthController {
       // create a promise based timeout
       const timeout = ms => new Promise(resolve => setTimeout(resolve, ms))
 
-      // wait for one second
-      await timeout(1200)
+      // wait for one second if we are not in testing mode
+      // this will prevent a userspamming too many requests
+      if (process.env.NODE_ENV !== 'testing') {
+        await timeout(1200)
+      }
 
       // responde with an error
       return response.unauthorized({error: {message: e.message}})
