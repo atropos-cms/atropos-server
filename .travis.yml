@@ -1,0 +1,14 @@
+language: node_js
+
+services:
+  - redis-server
+
+node_js:
+  - node
+  - lts/*
+
+sudo: false
+
+install:
+  - npm ci
+  - touch .env
