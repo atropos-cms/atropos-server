@@ -53,6 +53,7 @@
     "mailgun-js": "^0.20.0",
     "mysql": "^2.16.0",
     "pdf-thumbnail": "^1.0.4",
+    "randomstring": "^1.1.5",
     "raven": "^2.6.3",
     "sharp": "^0.20.5",
     "striptags": "^3.1.1",
