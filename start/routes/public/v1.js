@@ -19,6 +19,7 @@ Route.group(() => {
 })
   .prefix('public/v1')
   .namespace('Public/v1')
+  .middleware(['throttle:5'])
 
 // Routes with caching
 Route.group(() => {
@@ -36,4 +37,4 @@ Route.group(() => {
 })
   .prefix('public/v1')
   .namespace('Public/v1')
-  .middleware(['caching'])
+  .middleware(['caching', 'throttle:100'])

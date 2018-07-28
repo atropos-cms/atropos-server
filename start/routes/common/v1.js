@@ -28,4 +28,4 @@ Route.group(() => {
   Route.get('public/v1/modules/media/files/:type/:size/:id/download', 'Modules/Media/DownloadController.download')
 })
   .namespace('Common/v1')
-  .middleware(['throttle:200'])
+  .middleware(['throttle:600'])
