@@ -41,10 +41,19 @@ class EventController {
     return transform.item(event, EventTransformer)
   }
 
-  async destroy ({params}) {
-    return Event.query()
-      .where({id: params.id})
-      .delete()
+  async destroy ({params, auth}) {
+    let event = await Event.query()
+      .where('id', params.id)
+      .first()
+
+    let hasAdminPermission = await auth.user.hasPermission('administration-settings')
+    let isEventOwner = params.id === auth.user.id
+
+    if (!hasAdminPermission && !isEventOwner) {
+      throw new Error(`E_PERMISSION_DENIED: This event can not be deleted.`)
+    }
+
+    return event.delete()
   }
 }
 
