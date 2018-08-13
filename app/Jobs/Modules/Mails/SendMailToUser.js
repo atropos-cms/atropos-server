@@ -23,8 +23,11 @@ class SendMailToUser extends Job {
 
     this.info(`Sending mail to "${user.email}"...`)
 
+    let replyAddress = sender.email || Config.get('atropos.mailSenderAddress')
+
     await Mail.send('emails.modules.mails.send', {user, sender, subject: mailModel.subject, content: mailModel.content}, (message) => {
       message.from(Config.get('atropos.mailSenderAddress'), sender.full_name)
+      message.replyTo(replyAddress, sender.full_name)
       message.to(user.email, user.full_name)
       message.subject(mailModel.subject)
 
