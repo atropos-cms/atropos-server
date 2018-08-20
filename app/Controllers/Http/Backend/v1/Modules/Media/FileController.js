@@ -10,6 +10,7 @@ class FileController {
 
     let files = await File.query()
       .where({browsable: true})
+      .orderBy('created_at', 'desc')
       .orderBy('name', 'desc')
       .paginate(page, 50)
 
