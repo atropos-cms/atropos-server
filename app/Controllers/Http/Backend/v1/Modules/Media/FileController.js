@@ -6,12 +6,14 @@ const uuidV4 = require('uuid/v4')
 
 class FileController {
   async index ({request, params, transform}) {
+    let page = request.get().page || 1
+
     let files = await File.query()
       .where({browsable: true})
       .orderBy('name', 'desc')
-      .fetch()
+      .paginate(page, 50)
 
-    return transform.collection(files, FileTransformer)
+    return transform.paginate(files, FileTransformer)
   }
 
   async show ({params, transform}) {
