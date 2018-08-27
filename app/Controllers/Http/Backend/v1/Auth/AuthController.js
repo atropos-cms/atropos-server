@@ -33,6 +33,19 @@ class AuthController {
     }
   }
 
+  async refresh ({auth, request, response}) {
+    try {
+      const refreshToken = request.input('refreshToken')
+
+      const token = await auth.generateForRefreshToken(refreshToken)
+
+      return response.send({token})
+    } catch (e) {
+      // responde with an error
+      return response.unauthorized({error: {message: e.message}})
+    }
+  }
+
   async logout ({response}) {
     return response.ok()
   }

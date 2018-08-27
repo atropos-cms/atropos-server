@@ -13,6 +13,7 @@ const Route = use('Route')
 */
 Route.group('backend-v1--no-auth', () => {
   Route.post('/auth/login', 'Auth/AuthController.login')
+  Route.post('/auth/refresh', 'Auth/AuthController.refresh')
   Route.post('/auth/password-reset', 'Auth/PasswordResetController.send')
   Route.put('/auth/password-reset', 'Auth/PasswordResetController.reset')
 
