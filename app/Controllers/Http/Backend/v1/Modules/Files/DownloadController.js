@@ -16,12 +16,13 @@ class DownloadController {
       .first()
 
     let status = 'WAITING'
+    let usesLeft = request.input('type') === 'preview' ? 5 : 1
 
     let downloadToken = await DownloadToken.create({
       object_id: params.id,
       team_id: params.team,
       owner_id: auth.user.id,
-      type: 'single',
+      uses_left: usesLeft,
       status: status
     })
 
@@ -44,12 +45,14 @@ class DownloadController {
   async download ({auth, request, response, params}) {
     let downloadToken = await DownloadToken.query().with('object').where('id', params.token).first()
 
-    if (downloadToken.type === 'single') {
-      if (downloadToken.used_at !== null) throw Error('E_DOWNLOAD_TOKEN_INVALID: This download-token is not valid.')
+    // check if the token has any uses left
+    if (downloadToken.uses_left === 0) throw Error('E_DOWNLOAD_TOKEN_INVALID: This download-token is not valid.')
 
-      downloadToken.merge({used_at: new Date()})
-      await downloadToken.save()
-    }
+    downloadToken.merge({
+      used_at: new Date(),
+      uses_left: --downloadToken.uses_left
+    })
+    await downloadToken.save()
 
     let file = await downloadToken.getRelated('object')
     file.trackDownload()
