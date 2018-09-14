@@ -1,5 +1,6 @@
 'use strict'
 
+const moment = require('moment')
 const Drive = use('Drive')
 const kue = use('Kue')
 const Helpers = use('Helpers')
@@ -16,7 +17,7 @@ class DownloadController {
       .first()
 
     let status = 'WAITING'
-    let usesLeft = request.input('type') === 'preview' ? 5 : 1
+    let usesLeft = request.input('type') === 'preview' ? 10 : 1
 
     let downloadToken = await DownloadToken.create({
       object_id: params.id,
@@ -48,14 +49,19 @@ class DownloadController {
     // check if the token has any uses left
     if (downloadToken.uses_left === 0) throw Error('E_DOWNLOAD_TOKEN_INVALID: This download-token is not valid.')
 
+    const lastUsedAt = downloadToken.used_at
+
+    // track download if the token has not been used, or was used more than an hour ago
+    let file = await downloadToken.getRelated('object')
+    if (!lastUsedAt || moment(lastUsedAt).isBefore(moment().subtract(1, 'hour'))) {
+      file.trackDownload()
+    }
+
     downloadToken.merge({
       used_at: new Date(),
       uses_left: --downloadToken.uses_left
     })
     await downloadToken.save()
-
-    let file = await downloadToken.getRelated('object')
-    file.trackDownload()
 
     let driveStream = this._getDriveStream(file)
 
