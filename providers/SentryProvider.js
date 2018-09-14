@@ -11,7 +11,8 @@ class SentryProvider extends ServiceProvider {
     if (!Env.get('SENTRY_DSN')) return
 
     Raven.config(Env.get('SENTRY_DSN'), {
-      release: version
+      release: version,
+      environment: Env.get('NODE_ENV')
     }).install()
   }
 
