@@ -8,7 +8,7 @@ class PresenceController {
   }
 
   onNavigation (data) {
-    this.user.merge({last_action: new Date()})
+    this.user.merge({ last_action: new Date() })
     this.user.save()
   }
 }

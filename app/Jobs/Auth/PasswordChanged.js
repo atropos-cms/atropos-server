@@ -9,12 +9,12 @@ class PasswordChanged extends Job {
     return 'auth--password-changed'
   }
 
-  async handle ({user}) {
-    await this.init({user})
+  async handle ({ user }) {
+    await this.init({ user })
 
     this.info(`Sending password changed mail to "${user.email}"...`)
 
-    await Mail.send('emails.auth.password-changed', {user}, (message) => {
+    await Mail.send('emails.auth.password-changed', { user }, (message) => {
       message.from(Config.get('atropos.mailSenderAddress'))
       message.to(user.email)
       message.subject(this.antl.formatMessage('emails.subject--password-changed', { abbreviation: this.branding.abbreviation }))

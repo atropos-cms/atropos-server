@@ -3,7 +3,7 @@
 const TransformerAbstract = use('Adonis/Addons/Bumblebee/TransformerAbstract')
 
 class DownloadTokenTransformer extends TransformerAbstract {
-  async transform (model, {auth}) {
+  async transform (model, { auth }) {
     return {
       id: model.id,
       team_id: model.team_id,

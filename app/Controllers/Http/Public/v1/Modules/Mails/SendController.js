@@ -5,7 +5,7 @@ const Setting = use('App/Models/Setting')
 const SendMailToContactJob = use('App/Jobs/Modules/Mails/SendMailToContact')
 
 class SendController {
-  async send ({request, transform}) {
+  async send ({ request, transform }) {
     // Check if public access to the user contact is enabled
     let settings = await Setting.query().firstOrFail()
 
@@ -23,7 +23,7 @@ class SendController {
 
     let contact = await settings.contactUser().fetch()
 
-    this.sendMailToContact({...requestData, contact})
+    this.sendMailToContact({ ...requestData, contact })
 
     return true
   }
@@ -33,7 +33,7 @@ class SendController {
       .create(SendMailToContactJob.key, data)
       .priority('low')
       .attempts(3)
-      .backoff({delay: 10 * 1000, type: 'fixed'})
+      .backoff({ delay: 10 * 1000, type: 'fixed' })
       .removeOnComplete(true)
       .save()
   }

@@ -5,7 +5,7 @@ const { Command } = use('@adonisjs/ace')
 const Setting = use('App/Models/Setting')
 
 class Job extends Command {
-  async init ({user} = {}) {
+  async init ({ user } = {}) {
     // Instantiate Antl
     this.antl = Antl
     await this.antl.bootLoader()

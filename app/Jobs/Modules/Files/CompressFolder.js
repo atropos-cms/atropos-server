@@ -24,7 +24,7 @@ class CompressFolder extends Job {
     try {
       await this._createZip(downloadToken)
     } catch (error) {
-      downloadToken.merge({status: 'FAILED'})
+      downloadToken.merge({ status: 'FAILED' })
       downloadToken.save()
 
       this.error('Modules/Files/CompressFolder', `Error while creating zip. Downloadtoken invalidated: ${downloadToken.id}`)
@@ -34,7 +34,7 @@ class CompressFolder extends Job {
   }
 
   async _createZip (downloadToken) {
-    downloadToken.merge({status: 'COMPRESSING'})
+    downloadToken.merge({ status: 'COMPRESSING' })
     downloadToken.save()
 
     let folderEntity = await File.query()
@@ -48,7 +48,7 @@ class CompressFolder extends Job {
 
     await archive.finalize()
 
-    downloadToken.merge({status: 'OK'})
+    downloadToken.merge({ status: 'OK' })
     downloadToken.save()
 
     this.completed('Modules/Files/CompressFolder', `Created zip for folder '${folderEntity.id}'`)

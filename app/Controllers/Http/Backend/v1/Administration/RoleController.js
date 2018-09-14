@@ -5,7 +5,7 @@ const Permission = use('App/Models/Permission')
 const RoleTransformer = use('App/Transformers/Backend/v1/Administration/RoleTransformer')
 
 class RoleController {
-  async index ({transform}) {
+  async index ({ transform }) {
     let roles = await Role.query()
       .with('members')
       .fetch()
@@ -13,7 +13,7 @@ class RoleController {
     return transform.include('members,permissions').collection(roles, RoleTransformer)
   }
 
-  async show ({params, transform}) {
+  async show ({ params, transform }) {
     let role = await Role.query()
       .where('id', params.id)
       .with('members').first()
@@ -21,7 +21,7 @@ class RoleController {
     return transform.include('members,permissions').item(role, RoleTransformer)
   }
 
-  async store ({request, transform}) {
+  async store ({ request, transform }) {
     let role = await Role.create({
       ...request.only([
         'name'
@@ -33,7 +33,7 @@ class RoleController {
     return transform.include('members,permissions').item(role, RoleTransformer)
   }
 
-  async update ({params, request, transform}) {
+  async update ({ params, request, transform }) {
     let role = await Role.query()
       .where('id', params.id)
       .first()
@@ -62,9 +62,9 @@ class RoleController {
     return transform.include('members,permissions').item(role, RoleTransformer)
   }
 
-  async destroy ({params}) {
+  async destroy ({ params }) {
     return Role.query()
-      .where({id: params.id})
+      .where({ id: params.id })
       .delete()
   }
 }

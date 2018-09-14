@@ -12,7 +12,7 @@ class MeTransformer extends TransformerAbstract {
     ]
   }
 
-  async transform (model, {request}) {
+  async transform (model, { request }) {
     return {
       id: model.id,
 

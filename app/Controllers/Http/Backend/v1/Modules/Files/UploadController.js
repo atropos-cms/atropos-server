@@ -10,7 +10,7 @@ const uuidV4 = require('uuid/v4')
 const hasha = require('hasha')
 
 class UploadController {
-  async upload ({request, params, auth, transform}) {
+  async upload ({ request, params, auth, transform }) {
     let fileEntity = await File.findByOrFail('upload_token', params.token)
 
     fileEntity.status = 'uploading'
@@ -59,7 +59,7 @@ class UploadController {
     })
 
     // dispatch an event to generate a thumbnail
-    kue.dispatch(PreviewJob.key, fileEntity.id, {priority: 'low'})
+    kue.dispatch(PreviewJob.key, fileEntity.id, { priority: 'low' })
 
     return transform.item(fileEntity, ObjectTransformer)
   }

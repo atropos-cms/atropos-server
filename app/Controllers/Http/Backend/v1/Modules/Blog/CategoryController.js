@@ -4,7 +4,7 @@ const Category = use('App/Models/Modules/Blog/Category')
 const CategoryTransformer = use('App/Transformers/Backend/v1/Modules/Blog/CategoryTransformer')
 
 class CategoryController {
-  async index ({transform}) {
+  async index ({ transform }) {
     let category = Category.query()
       .orderBy('title', 'asc')
       .fetch()
@@ -12,7 +12,7 @@ class CategoryController {
     return transform.collection(category, CategoryTransformer)
   }
 
-  async show ({params, transform}) {
+  async show ({ params, transform }) {
     let category = await Category.query()
       .where('id', params.id)
       .firstOrFail()
@@ -20,7 +20,7 @@ class CategoryController {
     return transform.item(category, CategoryTransformer)
   }
 
-  async store ({request, auth, transform}) {
+  async store ({ request, auth, transform }) {
     let data = {
       ...request.only([
         'title'
@@ -32,7 +32,7 @@ class CategoryController {
     return transform.item(category, CategoryTransformer)
   }
 
-  async update ({params, request, auth, transform}) {
+  async update ({ params, request, auth, transform }) {
     let category = await Category.query()
       .where('id', params.id)
       .firstOrFail()
@@ -43,9 +43,9 @@ class CategoryController {
     return transform.item(category, CategoryTransformer)
   }
 
-  async destroy ({params}) {
+  async destroy ({ params }) {
     return Category.query()
-      .where({id: params.id})
+      .where({ id: params.id })
       .delete()
   }
 }

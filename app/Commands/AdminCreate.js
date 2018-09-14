@@ -16,8 +16,8 @@ class Install extends Command {
 
   async handle (args, { log, force, silent }) {
     try {
-      let adminRole = await this.getAdminRole({log})
-      await this.createAdminUser(adminRole, {log})
+      let adminRole = await this.getAdminRole({ log })
+      await this.createAdminUser(adminRole, { log })
 
       await Database.close()
       process.exit(0)

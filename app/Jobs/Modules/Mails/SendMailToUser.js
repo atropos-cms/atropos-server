@@ -15,8 +15,8 @@ class SendMailToUser extends Job {
     return 'modules-mails-send--send-mail-to-user'
   }
 
-  async handle ({user, mailId, sender}) {
-    await this.init({user})
+  async handle ({ user, mailId, sender }) {
+    await this.init({ user })
 
     let mailModel = await MailModel.findOrFail(mailId)
     let attachments = await mailModel.attachments().fetch()
@@ -25,7 +25,7 @@ class SendMailToUser extends Job {
 
     let replyAddress = sender.email || Config.get('atropos.mailSenderAddress')
 
-    await Mail.send('emails.modules.mails.send', {user, sender, subject: mailModel.subject, content: mailModel.content}, (message) => {
+    await Mail.send('emails.modules.mails.send', { user, sender, subject: mailModel.subject, content: mailModel.content }, (message) => {
       message.from(Config.get('atropos.mailSenderAddress'), sender.full_name)
       message.replyTo(replyAddress, sender.full_name)
       message.to(user.email, user.full_name)

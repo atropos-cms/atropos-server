@@ -5,7 +5,7 @@ const List = use('App/Models/Modules/Mails/List')
 const ListTransformer = use('App/Transformers/Backend/v1/Modules/Mails/ListTransformer')
 
 class ListController {
-  async index ({transform}) {
+  async index ({ transform }) {
     let lists = await List.query()
       .with('users')
       .with('roles')
@@ -14,9 +14,9 @@ class ListController {
     return transform.collection(lists, ListTransformer)
   }
 
-  async show ({params, transform}) {
+  async show ({ params, transform }) {
     let list = await List.query()
-      .where({id: params.id})
+      .where({ id: params.id })
       .with('users')
       .with('roles')
       .firstOrFail()
@@ -24,7 +24,7 @@ class ListController {
     return transform.item(list, ListTransformer)
   }
 
-  async store ({request, tenant, transform}) {
+  async store ({ request, tenant, transform }) {
     let data = {
       ...request.only([
         'name'
@@ -37,7 +37,7 @@ class ListController {
     return transform.item(list, ListTransformer)
   }
 
-  async update ({params, request, transform}) {
+  async update ({ params, request, transform }) {
     let list = await List.query()
       .where('id', params.id)
       .firstOrFail()
@@ -57,9 +57,9 @@ class ListController {
     return transform.item(list, ListTransformer)
   }
 
-  async destroy ({params}) {
+  async destroy ({ params }) {
     return List.query()
-      .where({id: params.id})
+      .where({ id: params.id })
       .delete()
   }
 }

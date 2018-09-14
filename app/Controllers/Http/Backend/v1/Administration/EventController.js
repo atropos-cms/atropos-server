@@ -4,7 +4,7 @@ const Event = use('App/Models/Event')
 const EventTransformer = use('App/Transformers/Backend/v1/Administration/EventTransformer')
 
 class EventController {
-  async index ({auth, transform}) {
+  async index ({ auth, transform }) {
     let userRoles = await auth.user.getMemberOfRoles()
 
     let events = await Event.query()
@@ -33,7 +33,7 @@ class EventController {
     return transform.collection(events, EventTransformer)
   }
 
-  async show ({params, transform}) {
+  async show ({ params, transform }) {
     let event = await Event.query()
       .where('id', params.id)
       .first()
@@ -41,7 +41,7 @@ class EventController {
     return transform.item(event, EventTransformer)
   }
 
-  async destroy ({params, auth}) {
+  async destroy ({ params, auth }) {
     let event = await Event.query()
       .where('id', params.id)
       .first()

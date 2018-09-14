@@ -9,12 +9,12 @@ class PasswordResetFailed extends Job {
     return 'auth--password-reset-failed'
   }
 
-  async handle ({email}) {
+  async handle ({ email }) {
     await this.init()
 
     this.info(`Sending PasswordResetFailed email to "${email}"...`)
 
-    await Mail.send('emails.auth.password-reset-failed', {email}, (message) => {
+    await Mail.send('emails.auth.password-reset-failed', { email }, (message) => {
       message.from(Config.get('atropos.mailSenderAddress'))
       message.to(email)
       message.subject(this.antl.formatMessage('emails.subject--password-reset-failed', { abbreviation: this.branding.abbreviation }))

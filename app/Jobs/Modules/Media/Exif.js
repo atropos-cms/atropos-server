@@ -27,7 +27,7 @@ class Exif extends Job {
     }
 
     try {
-      raw = Object.assign(raw, {dimensions: sizeOf(file)})
+      raw = Object.assign(raw, { dimensions: sizeOf(file) })
     } catch (error) {
       // if there was an error when processing exif data, return without throwing an error
     }

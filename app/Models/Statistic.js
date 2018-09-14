@@ -17,7 +17,7 @@ class Statistic extends Model {
     return false
   }
 
-  static async latest ({id, source, type} = {}) {
+  static async latest ({ id, source, type } = {}) {
     let query = Statistic.query()
 
     if (id === undefined) {
@@ -35,8 +35,8 @@ class Statistic extends Model {
     return latest.rows.length ? latest.rows[0] : null
   }
 
-  static async latestAmount ({id, source, type} = {}) {
-    let latest = await Statistic.latest({id, source, type})
+  static async latestAmount ({ id, source, type } = {}) {
+    let latest = await Statistic.latest({ id, source, type })
     return latest ? latest.amount : null
   }
 }

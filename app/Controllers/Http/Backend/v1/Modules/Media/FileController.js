@@ -5,11 +5,11 @@ const FileTransformer = use('App/Transformers/Backend/v1/Modules/Media/FileTrans
 const uuidV4 = require('uuid/v4')
 
 class FileController {
-  async index ({request, params, transform}) {
+  async index ({ request, params, transform }) {
     let page = request.get().page || 1
 
     let files = await File.query()
-      .where({browsable: true})
+      .where({ browsable: true })
       .orderBy('created_at', 'desc')
       .orderBy('name', 'desc')
       .paginate(page, 50)
@@ -17,16 +17,16 @@ class FileController {
     return transform.paginate(files, FileTransformer)
   }
 
-  async show ({params, transform}) {
+  async show ({ params, transform }) {
     let file = await File.query()
-      .where({browsable: true})
-      .where({id: params.id})
+      .where({ browsable: true })
+      .where({ id: params.id })
       .firstOrFail()
 
     return transform.item(file, FileTransformer)
   }
 
-  async store ({request, params, auth, transform}) {
+  async store ({ request, params, auth, transform }) {
     let data = {
       browsable: false,
       ...request.all(),
@@ -41,9 +41,9 @@ class FileController {
     return transform.item(file, FileTransformer)
   }
 
-  async update ({params, request, transform}) {
+  async update ({ params, request, transform }) {
     let file = await File.query()
-      .where({id: params.id})
+      .where({ id: params.id })
       .firstOrFail()
 
     await file.merge(request.all())
@@ -52,9 +52,9 @@ class FileController {
     return transform.item(file, FileTransformer)
   }
 
-  async destroy ({params, request}) {
+  async destroy ({ params, request }) {
     let file = await File.query()
-      .where({id: params.id})
+      .where({ id: params.id })
       .firstOrFail()
 
     return file.delete()

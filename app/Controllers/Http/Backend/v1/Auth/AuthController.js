@@ -6,7 +6,7 @@ const acceptLanguage = require('accept-language')
 const MeTransformer = use('App/Transformers/Backend/v1/MeTransformer')
 
 class AuthController {
-  async login ({auth, request, response}) {
+  async login ({ auth, request, response }) {
     try {
       const payload = request.only(['uid', 'password'])
       const user = await Persona.verify(payload, this._checkActivated)
@@ -17,7 +17,7 @@ class AuthController {
 
       await this._setLastLogin(user)
 
-      return response.send({token})
+      return response.send({ token })
     } catch (e) {
       // create a promise based timeout
       const timeout = ms => new Promise(resolve => setTimeout(resolve, ms))
@@ -29,34 +29,34 @@ class AuthController {
       }
 
       // responde with an error
-      return response.unauthorized({error: {message: e.message}})
+      return response.unauthorized({ error: { message: e.message } })
     }
   }
 
-  async refresh ({auth, request, response}) {
+  async refresh ({ auth, request, response }) {
     try {
       const refreshToken = request.input('refreshToken')
 
       const token = await auth.generateForRefreshToken(refreshToken)
 
-      return response.send({token})
+      return response.send({ token })
     } catch (e) {
       // responde with an error
-      return response.unauthorized({error: {message: e.message}})
+      return response.unauthorized({ error: { message: e.message } })
     }
   }
 
-  async logout ({response}) {
+  async logout ({ response }) {
     return response.ok()
   }
 
-  async get ({auth, request, transform}) {
+  async get ({ auth, request, transform }) {
     this._setLocalPreference(auth.user, request)
     this._setLastAction(auth.user)
     return transform.item(auth.user, MeTransformer)
   }
 
-  async update ({auth, request, transform}) {
+  async update ({ auth, request, transform }) {
     if (request.all().hasOwnProperty('old_password')) {
       await this._updatePassword(auth, request)
     } else {
@@ -66,13 +66,13 @@ class AuthController {
     return transform.item(auth.user, MeTransformer)
   }
 
-  async sendEmailVerification ({auth, request, transform}) {
+  async sendEmailVerification ({ auth, request, transform }) {
     const user = auth.user
     const token = await Persona.generateToken(user, 'email')
     Event.fire('email::send-verification', { user, token })
   }
 
-  async verifyEmail ({auth, request, transform, params}) {
+  async verifyEmail ({ auth, request, transform, params }) {
     const token = request.input('token')
     await Persona.verifyEmail(token)
   }
@@ -82,12 +82,12 @@ class AuthController {
   }
 
   async _setLastAction (user) {
-    user.merge({last_action: new Date()})
+    user.merge({ last_action: new Date() })
     await user.save()
   }
 
   async _setLastLogin (user) {
-    user.merge({last_login: new Date()})
+    user.merge({ last_login: new Date() })
     await user.save()
   }
 

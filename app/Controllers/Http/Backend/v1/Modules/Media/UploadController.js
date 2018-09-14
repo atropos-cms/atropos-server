@@ -11,7 +11,7 @@ const sharp = require('sharp')
 const hasha = require('hasha')
 
 class UploadController {
-  async upload ({request, params, transform}) {
+  async upload ({ request, params, transform }) {
     let fileEntity = await File.findByOrFail('upload_token', params.token)
 
     let sha256Checksum

@@ -11,7 +11,7 @@ class ObjectTransformer extends TransformerAbstract {
     ]
   }
 
-  async transform (model, {auth}) {
+  async transform (model, { auth }) {
     let users = await model.stargazers().fetch()
     let stared = users.rows.map(u => u.id).includes(auth.user.id)
 

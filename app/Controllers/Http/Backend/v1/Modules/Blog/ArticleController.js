@@ -5,7 +5,7 @@ const Article = use('App/Models/Modules/Blog/Article')
 const ArticleTransformer = use('App/Transformers/Backend/v1/Modules/Blog/ArticleTransformer')
 
 class ArticleController {
-  async index ({transform}) {
+  async index ({ transform }) {
     let articles = Article.query()
       .with('categories')
       .with('attachments')
@@ -15,7 +15,7 @@ class ArticleController {
     return transform.collection(articles, ArticleTransformer)
   }
 
-  async show ({params, transform}) {
+  async show ({ params, transform }) {
     let article = await Article.query()
       .where('id', params.id)
       .firstOrFail()
@@ -23,7 +23,7 @@ class ArticleController {
     return transform.include('content').item(article, ArticleTransformer)
   }
 
-  async store ({request, auth, transform}) {
+  async store ({ request, auth, transform }) {
     let data = {
       // defaults
       type: 'text',
@@ -55,7 +55,7 @@ class ArticleController {
     return transform.include('content').item(article, ArticleTransformer)
   }
 
-  async update ({params, request, auth, transform}) {
+  async update ({ params, request, auth, transform }) {
     let article = await Article.query()
       .where('id', params.id)
       .firstOrFail()
@@ -89,9 +89,9 @@ class ArticleController {
     return transform.include('content').item(article, ArticleTransformer)
   }
 
-  async destroy ({params}) {
+  async destroy ({ params }) {
     return Article.query()
-      .where({id: params.id})
+      .where({ id: params.id })
       .delete()
   }
 }

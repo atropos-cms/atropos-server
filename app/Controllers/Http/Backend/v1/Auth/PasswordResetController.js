@@ -5,7 +5,7 @@ const Persona = use('Persona')
 const User = use('App/Models/User')
 
 class PasswordResetController {
-  async send ({request, response}) {
+  async send ({ request, response }) {
     const email = request.input('uid')
 
     try {
@@ -17,11 +17,11 @@ class PasswordResetController {
 
       Event.fire('forgot::password', { user, token })
     } catch (e) {
-      Event.fire('forgot::failed', {email})
+      Event.fire('forgot::failed', { email })
     }
   }
 
-  async reset ({request, response}) {
+  async reset ({ request, response }) {
     const token = request.input('token')
     const payload = request.only(['password', 'password_confirmation'])
 

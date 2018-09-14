@@ -22,7 +22,7 @@ class ExceptionHandler {
    * @return {void}
    */
   async handle (error, { request, response }) {
-    response.status(error.status).send({error: { message: error.message }})
+    response.status(error.status).send({ error: { message: error.message } })
   }
 
   /**

@@ -9,7 +9,7 @@ const UserTransformer = use('App/Transformers/Backend/v1/Administration/UserTran
 const PasswordChangedJob = use('App/Jobs/Auth/PasswordChanged')
 
 class UserController {
-  async index ({transform}) {
+  async index ({ transform }) {
     let users = await User.query()
       .orderBy('first_name', 'asc')
       .fetch()
@@ -17,7 +17,7 @@ class UserController {
     return transform.collection(users, UserTransformer)
   }
 
-  async show ({params, transform}) {
+  async show ({ params, transform }) {
     let user = await User.query()
       .where('id', params.id)
       .first()
@@ -25,7 +25,7 @@ class UserController {
     return transform.item(user, UserTransformer)
   }
 
-  async store ({auth, request, transform}) {
+  async store ({ auth, request, transform }) {
     let user = await User.create({
       ...request.only([
         'activated',
@@ -54,7 +54,7 @@ class UserController {
     return transform.item(user, UserTransformer)
   }
 
-  async update ({params, request, transform}) {
+  async update ({ params, request, transform }) {
     let user = await User.query()
       .where('id', params.id)
       .first()
@@ -68,10 +68,10 @@ class UserController {
     return transform.item(user, UserTransformer)
   }
 
-  async destroy ({params}) {
+  async destroy ({ params }) {
     return User
       .query()
-      .where({id: params.id})
+      .where({ id: params.id })
       .delete()
   }
 
@@ -106,7 +106,7 @@ class UserController {
     user.password = data['password']
 
     if (!request.input('dont_send_notification')) {
-      kue.dispatch(PasswordChangedJob.key, {user}, 'high')
+      kue.dispatch(PasswordChangedJob.key, { user }, 'high')
     }
 
     return user.save()

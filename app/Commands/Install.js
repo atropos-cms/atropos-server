@@ -31,15 +31,15 @@ class Install extends Command {
     try {
       this._validateState(force)
       // general setup
-      await this.migrateDatabase({log})
-      await this.runSetup({log})
+      await this.migrateDatabase({ log })
+      await this.runSetup({ log })
 
       // create the first admin user
-      let adminRole = await this.createAdminRole({log})
-      await this.createAdminUser(adminRole, {log})
+      let adminRole = await this.createAdminRole({ log })
+      await this.createAdminUser(adminRole, { log })
 
       // create a role for normal users
-      await this.createUserRole({log})
+      await this.createUserRole({ log })
 
       await Database.close()
       process.exit(0)
@@ -49,7 +49,7 @@ class Install extends Command {
     }
   }
 
-  async migrateDatabase ({log}) {
+  async migrateDatabase ({ log }) {
     this.info(`${this.icon('info')} Migrating Database....`)
 
     const migrations = await this.migration.status(this._getSchemaFiles())

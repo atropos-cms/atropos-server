@@ -12,8 +12,8 @@ class EventListenerProcessor {
   }
 
   async getDataForEvent (data) {
-    let {data: eventData, ...properties} = data
-    const defaultData = Object.assign({...properties}, {
+    let { data: eventData, ...properties } = data
+    const defaultData = Object.assign({ ...properties }, {
       owner_id: data.owner_id,
       content: null
     })

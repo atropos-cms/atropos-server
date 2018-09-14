@@ -4,7 +4,7 @@ const Team = use('App/Models/Modules/Files/Team')
 
 class ModulesFilesTeamsPermission {
   async handle ({ request, auth }, next, params) {
-    const {team: teamId} = request.params
+    const { team: teamId } = request.params
     const permission = params[0]
 
     if (teamId && (await this.hasPermissionOnTeam(teamId, permission, auth.user))) {
@@ -16,7 +16,7 @@ class ModulesFilesTeamsPermission {
 
   async hasPermissionOnTeam (teamId, permission, user) {
     let team = await Team.query()
-      .where({id: teamId})
+      .where({ id: teamId })
       .first()
 
     if (!team) return false

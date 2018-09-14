@@ -4,7 +4,7 @@ const Gallery = use('App/Models/Modules/Content/Gallery')
 const GalleryTransformer = use('App/Transformers/Public/v1/Modules/Content/GalleryTransformer')
 
 class GalleryController {
-  async index ({transform}) {
+  async index ({ transform }) {
     let gallery = await Gallery.query()
       .with('images')
       .where('published', true)
@@ -14,7 +14,7 @@ class GalleryController {
     return transform.collection(gallery, GalleryTransformer)
   }
 
-  async show ({params, transform}) {
+  async show ({ params, transform }) {
     let gallery = await Gallery.query()
       .where('published', true)
       .where('id', params.id)

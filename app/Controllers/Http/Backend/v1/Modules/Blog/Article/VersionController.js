@@ -4,19 +4,19 @@ const Article = use('App/Models/Modules/Blog/Article')
 const jsondiffpatch = require('jsondiffpatch')
 
 class VersionController {
-  async index ({params}) {
+  async index ({ params }) {
     let article = await Article.findOrFail(params.article)
     return article.versions().fetch()
   }
 
-  async show ({params}) {
+  async show ({ params }) {
     return Article.findOrFail(params.article).versions().findOrFail(params.id).fetch()
   }
 
   // restore
-  async update ({params}) {
+  async update ({ params }) {
     let article = await Article.findOrFail(params.article)
-    let articleData = {...article.toJSON()}
+    let articleData = { ...article.toJSON() }
 
     let versions = await article.versions().fetch()
 

@@ -8,8 +8,8 @@ const kue = use('Kue')
 const SendMailToUserJob = use('App/Jobs/Modules/Mails/SendMailToUser')
 
 class SendController {
-  async send ({auth, request, transform}) {
-    let {to, subject, content} = request.post()
+  async send ({ auth, request, transform }) {
+    let { to, subject, content } = request.post()
 
     // create mail entity
     const mail = await Mail.create({
@@ -53,7 +53,7 @@ class SendController {
 
     Event.fire('event::modules-mails-mail::new', {
       owner_id: auth.user.id,
-      data: {mail: mail, recipientList: recipientList}
+      data: { mail: mail, recipientList: recipientList }
     })
 
     return true
@@ -61,10 +61,10 @@ class SendController {
 
   async sendMailToUser (user, mailId, sender) {
     kue.instance
-      .create(SendMailToUserJob.key, {user, mailId, sender})
+      .create(SendMailToUserJob.key, { user, mailId, sender })
       .priority('low')
       .attempts(3)
-      .backoff({delay: 10 * 1000, type: 'fixed'})
+      .backoff({ delay: 10 * 1000, type: 'fixed' })
       .removeOnComplete(true)
       .save()
   }

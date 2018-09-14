@@ -13,7 +13,7 @@ class ModulesBlogArticlesSeeder {
       .createMany(5)
 
     for (let article of articles) {
-      article.merge({ title: faker.sentence({words: 4}) })
+      article.merge({ title: faker.sentence({ words: 4 }) })
       await article.save()
       await article.author().associate(faker.pickone(users))
     }

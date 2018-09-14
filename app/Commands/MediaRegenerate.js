@@ -23,7 +23,7 @@ class MediaRegenerate extends Command {
   async handle (args, options) {
     this.info(`Processing media....`)
 
-    let files = (await File.query().where({browsable: true}).fetch()).toJSON()
+    let files = (await File.query().where({ browsable: true }).fetch()).toJSON()
     for (let file of files) {
       this.info(`Processing '${file.id}'....`)
       await kue.dispatch(MediaThumbnailsJob.key, file, 'low').result

@@ -5,7 +5,7 @@ const packageJSON = require('../../../../../package.json')
 var gitVersionSha = null
 
 class AuthController {
-  async index ({request, response}) {
+  async index ({ request, response }) {
     gitVersionSha = gitVersionSha || git.short()
 
     return {

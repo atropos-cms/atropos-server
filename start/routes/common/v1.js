@@ -10,8 +10,8 @@ const Route = use('Route')
 // Meta
 Route.group(() => {
   Route.get('/', () => ({ title: 'Atropos Api Endpoint' }))
-  Route.get('public/v1', ({response}) => response.redirect('/public/v1/meta'))
-  Route.get('backend/v1', ({response}) => response.redirect('/backend/v1/meta'))
+  Route.get('public/v1', ({ response }) => response.redirect('/public/v1/meta'))
+  Route.get('backend/v1', ({ response }) => response.redirect('/backend/v1/meta'))
   Route.get('backend/v1/meta', 'MetaController.index')
   Route.get('public/v1/meta', 'MetaController.index')
 })

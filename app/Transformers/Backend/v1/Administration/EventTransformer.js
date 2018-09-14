@@ -4,7 +4,7 @@ const moment = require('moment')
 const TransformerAbstract = use('Adonis/Addons/Bumblebee/TransformerAbstract')
 
 class EventTransformer extends TransformerAbstract {
-  async transform (model, {request}) {
+  async transform (model, { request }) {
     return {
       id: model.id,
 

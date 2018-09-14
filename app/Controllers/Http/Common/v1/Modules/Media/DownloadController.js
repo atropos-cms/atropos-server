@@ -4,20 +4,20 @@ const Drive = use('Drive')
 const File = use('App/Models/Modules/Media/File')
 
 class DownloadController {
-  async download ({request, response, params}) {
-    let {id, type, size} = params
+  async download ({ request, response, params }) {
+    let { id, type, size } = params
     let fileEntity
 
     try {
       fileEntity = await File.findOrFail(id)
     } catch (e) {
-      return this.throwNotFoundError({id})
+      return this.throwNotFoundError({ id })
     }
 
     let filePath = this.getFilePath(fileEntity.storage_file, type, size)
 
     if (!await Drive.exists(`media/${filePath}`)) {
-      return this.throwNotFoundError({id, type, size})
+      return this.throwNotFoundError({ id, type, size })
     }
 
     return response.download(
@@ -33,10 +33,10 @@ class DownloadController {
       return `${type}/${size}/${filePath}`
     }
 
-    return this.throwNotFoundError({type, size})
+    return this.throwNotFoundError({ type, size })
   }
 
-  throwNotFoundError ({id, type, size}) {
+  throwNotFoundError ({ id, type, size }) {
     if (type && size) {
       throw Error(`E_FILE_NOT_FOUND: The media file with this type '${type}' and size '${size}' could not be found.`)
     }

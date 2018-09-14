@@ -5,7 +5,7 @@ const Block = use('App/Models/Modules/Content/Block')
 const BlockTransformer = use('App/Transformers/Backend/v1/Modules/Content/BlockTransformer')
 
 class BlockController {
-  async index ({transform}) {
+  async index ({ transform }) {
     let block = await Block.query()
       .orderBy('published', 'desc')
       .orderBy('title', 'asc')
@@ -14,7 +14,7 @@ class BlockController {
     return transform.collection(block, BlockTransformer)
   }
 
-  async show ({params, transform}) {
+  async show ({ params, transform }) {
     let block = await Block.query()
       .where('id', params.id)
       .firstOrFail()
@@ -22,7 +22,7 @@ class BlockController {
     return transform.item(block, BlockTransformer)
   }
 
-  async store ({request, auth, transform}) {
+  async store ({ request, auth, transform }) {
     let data = {
       ...request.only([
         'title',
@@ -43,7 +43,7 @@ class BlockController {
     return transform.item(block, BlockTransformer)
   }
 
-  async update ({params, request, auth, transform}) {
+  async update ({ params, request, auth, transform }) {
     let block = await Block.query()
       .where('id', params.id)
       .firstOrFail()
@@ -64,9 +64,9 @@ class BlockController {
     return transform.item(block, BlockTransformer)
   }
 
-  async destroy ({params, transform}) {
+  async destroy ({ params, transform }) {
     let block = await Block.query()
-      .where({id: params.id})
+      .where({ id: params.id })
       .delete()
 
     return transform.item(block, BlockTransformer)

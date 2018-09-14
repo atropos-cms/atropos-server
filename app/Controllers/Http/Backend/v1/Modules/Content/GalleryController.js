@@ -5,7 +5,7 @@ const Gallery = use('App/Models/Modules/Content/Gallery')
 const GalleryTransformer = use('App/Transformers/Backend/v1/Modules/Content/GalleryTransformer')
 
 class GalleryController {
-  async index ({transform}) {
+  async index ({ transform }) {
     let gallery = await Gallery.query()
       .with('images')
       .orderBy('order', 'asc')
@@ -15,7 +15,7 @@ class GalleryController {
     return transform.collection(gallery, GalleryTransformer)
   }
 
-  async show ({params, transform}) {
+  async show ({ params, transform }) {
     let gallery = await Gallery.query()
       .where('id', params.id)
       .firstOrFail()
@@ -23,7 +23,7 @@ class GalleryController {
     return transform.include('images').item(gallery, GalleryTransformer)
   }
 
-  async store ({auth, request, transform}) {
+  async store ({ auth, request, transform }) {
     let data = {
       ...request.only([
         'title',
@@ -44,7 +44,7 @@ class GalleryController {
     return transform.include('images').item(gallery, GalleryTransformer)
   }
 
-  async update ({params, request, auth, transform}) {
+  async update ({ params, request, auth, transform }) {
     let gallery = await Gallery.query()
       .where('id', params.id)
       .firstOrFail()
@@ -70,9 +70,9 @@ class GalleryController {
     return transform.include('images').item(gallery, GalleryTransformer)
   }
 
-  async destroy ({params, transform}) {
+  async destroy ({ params, transform }) {
     await Gallery.query()
-      .where({id: params.id})
+      .where({ id: params.id })
       .delete()
   }
 
@@ -91,7 +91,7 @@ class GalleryController {
       primaryCover = images.length >= 1 ? images[0] : null
     }
 
-    await gallery.merge({cover_id: primaryCover})
+    await gallery.merge({ cover_id: primaryCover })
 
     await gallery.images().detach()
     await gallery.images().attach(images, row => {

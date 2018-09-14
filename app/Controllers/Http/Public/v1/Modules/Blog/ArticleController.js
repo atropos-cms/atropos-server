@@ -6,7 +6,7 @@ const Article = use('App/Models/Modules/Blog/Article')
 const ArticleTransformer = use('App/Transformers/Public/v1/Modules/Blog/ArticleTransformer')
 
 class ArticleController {
-  async index ({transform}) {
+  async index ({ transform }) {
     let articles = await Article.query()
       .where('published_at', '<=', Article.formatDates(null, moment()))
       .with('categories')
@@ -27,7 +27,7 @@ class ArticleController {
     return transform.collection(articles, ArticleTransformer)
   }
 
-  async show ({params, transform}) {
+  async show ({ params, transform }) {
     let article = Article.query()
       .where('published_at', '<=', Article.formatDates(null, moment()))
       .where('id', params.id)

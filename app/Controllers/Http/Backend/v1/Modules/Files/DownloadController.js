@@ -9,9 +9,9 @@ const DownloadToken = use('App/Models/Modules/Files/DownloadToken')
 const DownloadTokenTransformer = use('App/Transformers/Backend/v1/Modules/Files/DownloadTokenTransformer')
 
 class DownloadController {
-  async request ({request, response, params, transform, auth}) {
+  async request ({ request, response, params, transform, auth }) {
     let object = await File.query()
-      .where({id: params.id})
+      .where({ id: params.id })
       .where('team_id', params.team)
       .first()
 
@@ -37,12 +37,12 @@ class DownloadController {
     return transform.item(downloadToken, DownloadTokenTransformer)
   }
 
-  async status ({request, response, params, transform}) {
+  async status ({ request, response, params, transform }) {
     let downloadToken = await DownloadToken.findOrFail(params.token)
     return transform.item(downloadToken, DownloadTokenTransformer)
   }
 
-  async download ({auth, request, response, params}) {
+  async download ({ auth, request, response, params }) {
     let downloadToken = await DownloadToken.query().with('object').where('id', params.token).first()
 
     // check if the token has any uses left
@@ -70,7 +70,7 @@ class DownloadController {
   }
 
   async _prepareFile (downloadToken) {
-    downloadToken.merge({status: 'OK'})
+    downloadToken.merge({ status: 'OK' })
     downloadToken.save()
   }
 
