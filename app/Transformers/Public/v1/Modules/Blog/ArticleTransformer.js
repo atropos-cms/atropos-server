@@ -19,7 +19,7 @@ class ArticleTransformer extends TransformerAbstract {
 
     let author = await model.author().fetch()
 
-    let summary = truncate(striptags(model.content).replace('&nbsp;', ' '), 200)
+    let summary = truncate(striptags(model.content, ['a', 'br']).replace('&nbsp;', ' '), 200)
 
     return {
       id: model.id,
