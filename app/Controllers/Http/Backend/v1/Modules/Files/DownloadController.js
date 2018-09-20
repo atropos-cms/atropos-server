@@ -46,7 +46,7 @@ class DownloadController {
     let downloadToken = await DownloadToken.query().with('object').where('id', params.token).first()
 
     // check if the token has any uses left
-    if (downloadToken.uses_left === 0) throw Error('E_DOWNLOAD_TOKEN_INVALID: This download-token is not valid.')
+    if (!downloadToken || downloadToken.uses_left === 0) throw Error('E_DOWNLOAD_TOKEN_INVALID: This download-token is not valid.')
 
     let file = await downloadToken.getRelated('object')
     let driveStream = this._getDriveStream(file)
