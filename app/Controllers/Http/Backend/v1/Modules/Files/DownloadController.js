@@ -17,7 +17,7 @@ class DownloadController {
       .first()
 
     let status = 'WAITING'
-    let usesLeft = request.input('type') === 'preview' ? 10 : 1
+    let usesLeft = 1
 
     let downloadToken = await DownloadToken.create({
       object_id: params.id,
@@ -43,32 +43,37 @@ class DownloadController {
     return transform.item(downloadToken, DownloadTokenTransformer)
   }
 
-  async download ({ auth, request, response, params }) {
+  async download ({ req, res, auth, request, response, params }) {
     let downloadToken = await DownloadToken.query().with('object').where('id', params.token).first()
 
     // check if the token has any uses left
     if (downloadToken.uses_left === 0) throw Error('E_DOWNLOAD_TOKEN_INVALID: This download-token is not valid.')
 
-    const lastUsedAt = downloadToken.used_at
-
-    // track download if the token has not been used, or was used more than an hour ago
     let file = await downloadToken.getRelated('object')
-    if (!lastUsedAt || moment(lastUsedAt).isBefore(moment().subtract(1, 'hour'))) {
-      file.trackDownload()
-    }
-
-    downloadToken.merge({
-      used_at: new Date(),
-      uses_left: --downloadToken.uses_left
-    })
-    await downloadToken.save()
-
     let driveStream = this._getDriveStream(file)
 
+    // if the file does not exist in the file system, return an error
     if (!await Drive.exists(driveStream.path)) {
       throw Error('E_FILE_NOT_FOUND: The requested file could not be found.')
     }
 
+    // when the socket closes, check how much data was sent
+    // if we sent more than 90% of the file we will count this as a download
+    res.on('finish', async () => {
+      if (req.connection.bytesWritten < file.size * 0.9) return
+
+      // update the uses left on the token
+      downloadToken.merge({
+        used_at: new Date(),
+        uses_left: --downloadToken.uses_left
+      })
+      await downloadToken.save()
+
+      // track the download
+      await file.trackDownload()
+    })
+
+    // return the file as an attachment
     return response.attachment(
       Drive.getStream(driveStream.path).path,
       driveStream.name
