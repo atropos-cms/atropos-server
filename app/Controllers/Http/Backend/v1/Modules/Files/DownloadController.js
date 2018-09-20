@@ -1,6 +1,5 @@
 'use strict'
 
-const moment = require('moment')
 const Drive = use('Drive')
 const kue = use('Kue')
 const Helpers = use('Helpers')
@@ -17,7 +16,7 @@ class DownloadController {
       .first()
 
     let status = 'WAITING'
-    let usesLeft = 1
+    let usesLeft = request.input('type') === 'preview' ? 3 : 1
 
     let downloadToken = await DownloadToken.create({
       object_id: params.id,
