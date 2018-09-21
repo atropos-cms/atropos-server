@@ -62,10 +62,14 @@ class GalleryController {
 
     await gallery.save()
 
-    Event.fire('event::modules-content-gallery::update', {
-      owner_id: auth.user.id,
-      data: gallery
-    })
+    // Only log change event anything else than order changed.
+    // this prevents triggering an update if we reorder the galleries
+    if (Object.keys(request.except(['id', 'order'])).length > 0) {
+      Event.fire('event::modules-content-gallery::update', {
+        owner_id: auth.user.id,
+        data: gallery
+      })
+    }
 
     return transform.include('images').item(gallery, GalleryTransformer)
   }
