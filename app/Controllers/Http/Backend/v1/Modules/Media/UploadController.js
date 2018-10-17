@@ -19,7 +19,7 @@ class UploadController {
     fileEntity.status = 'uploading'
     fileEntity.save()
 
-    let r300Stream = await sharp().rotate().resize(300, 300).max()
+    let r300Stream = await sharp().rotate().resize(300, 300, { fit: 'inside', withoutEnlargement: true })
     let s300Stream = await sharp().rotate().resize(300, 300)
 
     try {

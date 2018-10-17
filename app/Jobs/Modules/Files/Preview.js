@@ -57,7 +57,7 @@ class Preview extends Job {
   }
 
   async generatorSharp (file, previewPath) {
-    let preview = await sharp(file).rotate().resize(300, 300).max().jpeg()
+    let preview = await sharp(file).rotate().resize(300, 300, { fit: 'inside', withoutEnlargement: true }).jpeg()
     await Drive.put(previewPath, preview)
   }
 

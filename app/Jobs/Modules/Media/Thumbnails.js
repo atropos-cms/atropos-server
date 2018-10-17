@@ -17,11 +17,11 @@ class Thumbnails extends Job {
     const file = await Drive.get(`media/${fileEntity.storage_file}`)
 
     // create thumbnails for all sizes
-    let r600 = await sharp(file).rotate().resize(600, 600).max().withoutEnlargement()
-    let r1200 = await sharp(file).rotate().resize(1200, 1200).max().withoutEnlargement()
-    let r2400 = await sharp(file).rotate().resize(2400, 2400).max().withoutEnlargement()
+    let r600 = await sharp(file).rotate().resize(600, 600, { fit: 'inside', withoutEnlargement: true })
+    let r1200 = await sharp(file).rotate().resize(1200, 1200, { fit: 'inside', withoutEnlargement: true })
+    let r2400 = await sharp(file).rotate().resize(2400, 2400, { fit: 'inside', withoutEnlargement: true })
     let s50 = await sharp(file).rotate().resize(50, 50)
-    let s600 = await sharp(file).rotate().resize(600, 600).withoutEnlargement()
+    let s600 = await sharp(file).rotate().resize(600, 600, { fit: 'inside', withoutEnlargement: true })
 
     // upload thumbnails in parallel
     await Promise.all([
