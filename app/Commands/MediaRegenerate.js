@@ -33,7 +33,7 @@ class MediaRegenerate extends Command {
       await this.regenerateMedia()
     }
 
-    if (flags.flags) {
+    if (flags.files) {
       await this.regenerateFiles()
     }
 
