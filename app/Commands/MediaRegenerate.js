@@ -13,14 +13,38 @@ const FilesPreviewJob = use('App/Jobs/Modules/Files/Preview')
 
 class MediaRegenerate extends Command {
   static get signature () {
-    return 'media:regenerate'
+    return `
+      media:regenerate
+      { --media : Only regenerate Media files }
+      { --files : Only regenerate previews for files }`
   }
 
   static get description () {
     return 'This command regenerates all media files thumbnails and exif data'
   }
 
-  async handle (args, options) {
+  async handle (args, flags) {
+    if (!flags.media && !flags.files) {
+      this.info(`No media regenerated. Set the --media or --files flags.`)
+      process.exit(0)
+    }
+
+    if (flags.media) {
+      await this.regenerateMedia()
+    }
+
+    if (flags.flags) {
+      await this.regenerateFiles()
+    }
+
+    this.success('All media files processed')
+
+    await Redis.quit(Config.get('kue.connection'))
+    await Database.close()
+    process.exit(0)
+  }
+
+  async regenerateMedia () {
     this.info(`Processing media....`)
 
     let files = (await File.query().where({ browsable: true }).fetch()).toJSON()
@@ -29,7 +53,9 @@ class MediaRegenerate extends Command {
       await kue.dispatch(MediaThumbnailsJob.key, file, 'low').result
       await kue.dispatch(MediaExifJob.key, file, 'low').result
     }
+  }
 
+  async regenerateFiles () {
     this.info(`Processing files....`)
 
     let objects = (await Object.query().fetch()).toJSON()
@@ -37,12 +63,6 @@ class MediaRegenerate extends Command {
       this.info(`Processing '${file.id}'....`)
       await kue.dispatch(FilesPreviewJob.key, file.id, 'low').result
     }
-
-    this.success('All media files processed')
-
-    await Redis.quit(Config.get('kue.connection'))
-    await Database.close()
-    process.exit(0)
   }
 }
 
