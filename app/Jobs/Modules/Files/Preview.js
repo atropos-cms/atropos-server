@@ -31,13 +31,15 @@ class Preview extends Job {
 
       // call the generator
       await this[`generator${previewGenerator}`](file, fileEntity.previewPath())
+
+      this.completed('Modules/Files/Preview', `Generated preview for '${fileEntity.id}'`)
     } catch (error) {
+      this.error('Modules/Files/Preview', `Failed to generate preview for '${fileEntity.id}': ${error}`)
+
       Raven.captureException(error)
     }
     // clear the cache for each thumbnail
     await Cache.tags(['modules-files-object']).forget(`modules-files-preview/${fileEntity.id}`)
-
-    this.completed('Modules/Files/Preview', `Generated preview for '${fileEntity.id}'`)
   }
 
   getPreviewGenerator (mimeType) {
