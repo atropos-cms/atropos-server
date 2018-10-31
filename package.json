@@ -38,7 +38,7 @@
     "@adonisjs/vow": "^1.0.17",
     "@adonisjs/websocket": "^1.0.11",
     "accept-language": "^3.0.18",
-    "adonis-bumblebee": "^1.5.0",
+    "adonis-bumblebee": "^1.5.2",
     "adonis-cache": "^0.3.2",
     "adonis-kue": "^5.0.1",
     "adonis-scheduler": "^3.0.2",
@@ -61,13 +61,13 @@
     "uuid": "^3.3.2"
   },
   "devDependencies": {
-    "eslint": "^5.7.0",
+    "eslint": "^5.8.0",
     "eslint-config-standard": "^12.0.0",
     "eslint-plugin-import": "^2.14.0",
     "eslint-plugin-node": "^7.0.1",
     "eslint-plugin-promise": "^4.0.1",
     "eslint-plugin-standard": "^4.0.0",
-    "sqlite3": "^4.0.2"
+    "sqlite3": "^4.0.3"
   },
   "autoload": {
     "App": "./app"
