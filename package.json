@@ -50,7 +50,7 @@
     "hasha": "^3.0.0",
     "image-size": "^0.6.3",
     "jsondiffpatch": "^0.3.11",
-    "mailgun-js": "^0.21.0",
+    "mailgun-js": "^0.22.0",
     "mysql": "^2.16.0",
     "pdf-thumbnail": "^1.0.4",
     "randomstring": "^1.1.5",
@@ -61,13 +61,13 @@
     "uuid": "^3.3.2"
   },
   "devDependencies": {
-    "eslint": "^5.8.0",
+    "eslint": "^5.9.0",
     "eslint-config-standard": "^12.0.0",
     "eslint-plugin-import": "^2.14.0",
-    "eslint-plugin-node": "^7.0.1",
+    "eslint-plugin-node": "^8.0.0",
     "eslint-plugin-promise": "^4.0.1",
     "eslint-plugin-standard": "^4.0.0",
-    "sqlite3": "^4.0.3"
+    "sqlite3": "^4.0.4"
   },
   "autoload": {
     "App": "./app"
