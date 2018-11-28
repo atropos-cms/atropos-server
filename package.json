@@ -38,7 +38,7 @@
     "@adonisjs/vow": "^1.0.17",
     "@adonisjs/websocket": "^1.0.11",
     "accept-language": "^3.0.18",
-    "adonis-bumblebee": "^1.5.2",
+    "adonis-bumblebee": "^1.5.3",
     "adonis-cache": "^0.3.2",
     "adonis-kue": "^5.0.1",
     "adonis-scheduler": "^3.0.2",
