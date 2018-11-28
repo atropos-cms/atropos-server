@@ -19,7 +19,6 @@ class FileController {
 
   async show ({ params, transform }) {
     let file = await File.query()
-      .where({ browsable: true })
       .where({ id: params.id })
       .firstOrFail()
 
