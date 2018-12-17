@@ -59,8 +59,8 @@ class Thumbnails extends Job {
     let r600 = await sharp(file).rotate().resize(600, 600, { fit: 'inside', withoutEnlargement: true })
     let r1200 = await sharp(file).rotate().resize(1200, 1200, { fit: 'inside', withoutEnlargement: true })
     let r2400 = await sharp(file).rotate().resize(2400, 2400, { fit: 'inside', withoutEnlargement: true })
-    let s50 = await sharp(file).rotate().resize(50, 50)
-    let s600 = await sharp(file).rotate().resize(600, 600, { fit: 'inside', withoutEnlargement: true })
+    let s50 = await sharp(file).rotate().resize(50, 50, { fit: 'cover' })
+    let s600 = await sharp(file).rotate().resize(600, 600, { fit: 'cover', withoutEnlargement: true })
 
     // upload thumbnails in parallel
     await Promise.all([
@@ -77,8 +77,8 @@ class Thumbnails extends Job {
     let r600 = await pdf(file, { resize: { width: 600, height: 600 } })
     let r1200 = await pdf(file, { resize: { width: 1200, height: 1200 } })
     let r2400 = await pdf(file, { resize: { width: 2400, height: 2400 } })
-    let s50 = await pdf(file, { resize: { width: 50, height: 50 } })
-    let s600 = await pdf(file, { resize: { width: 600, height: 600 } })
+    let s50 = await pdf(file, { crop: { width: 50, height: 50 } })
+    let s600 = await pdf(file, { crop: { width: 600, height: 600 } })
 
     // upload thumbnails in parallel
     await Promise.all([
