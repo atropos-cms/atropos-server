@@ -52,10 +52,10 @@
     "jsondiffpatch": "^0.3.11",
     "mailgun-js": "^0.22.0",
     "mysql": "^2.16.0",
-    "pdf-thumbnail": "^1.0.4",
+    "pdf-thumbnail": "^1.0.6",
     "randomstring": "^1.1.5",
     "raven": "^2.6.4",
-    "sharp": "^0.21.1",
+    "sharp": "^0.21.2",
     "striptags": "^3.1.1",
     "truncate": "^2.0.1",
     "uuid": "^3.3.2"
@@ -67,7 +67,7 @@
     "eslint-plugin-node": "^8.0.1",
     "eslint-plugin-promise": "^4.0.1",
     "eslint-plugin-standard": "^4.0.0",
-    "sqlite3": "^4.0.4"
+    "sqlite3": "^4.0.6"
   },
   "autoload": {
     "App": "./app"
