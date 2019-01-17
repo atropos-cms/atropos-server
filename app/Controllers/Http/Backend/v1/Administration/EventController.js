@@ -47,7 +47,7 @@ class EventController {
       .first()
 
     let hasAdminPermission = await auth.user.hasPermission('administration-settings')
-    let isEventOwner = params.id === auth.user.id
+    let isEventOwner = event.owner_id === auth.user.id
 
     if (!hasAdminPermission && !isEventOwner) {
       throw new Error(`E_PERMISSION_DENIED: This event can not be deleted.`)
