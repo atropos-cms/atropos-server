@@ -22,4 +22,4 @@ install:
   - touch .env
   - node ace key:generate
 
-script: nyc npm test && npm run test-ts
+script: nyc npm test
