@@ -11,12 +11,20 @@
   "main": "index.js",
   "scripts": {
     "dev": "adonis serve --dev",
-    "debug": "adonis serve --dev --debug",
     "start": "node server.js",
+    "kue:inspect": "node_modules/kue/bin/kue-dashboard -p 8080",
     "lint": "eslint --ext .js --ignore-path .gitignore .",
     "fix": "eslint --ext .js --ignore-path .gitignore . --fix",
+    "pretest": "npm run lint",
+    "posttest": "npm run report-coverage",
     "test": "node ace test",
-    "kue:inspect": "node_modules/kue/bin/kue-dashboard -p 8080"
+    "coverage": "nyc node ace test",
+    "report-coverage": "nyc report --reporter=text-lcov > coverage.lcov && codecov"
+  },
+  "nyc": {
+    "exclude": [
+      "database"
+    ]
   },
   "dependencies": {
     "@adonisjs/ace": "^5.0.8",
@@ -61,12 +69,14 @@
     "uuid": "^3.3.2"
   },
   "devDependencies": {
+    "codecov": "^3.1.0",
     "eslint": "^5.12.1",
     "eslint-config-standard": "^12.0.0",
     "eslint-plugin-import": "^2.14.0",
     "eslint-plugin-node": "^8.0.1",
     "eslint-plugin-promise": "^4.0.1",
     "eslint-plugin-standard": "^4.0.0",
+    "nyc": "^13.1.0",
     "sqlite3": "^4.0.6"
   },
   "autoload": {
