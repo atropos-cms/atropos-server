@@ -14,7 +14,6 @@ node_js:
   - lts/*
 
 before_install:
-  - npm install -g npm@latest
   - npm install -g node-gyp nyc
 
 install:
