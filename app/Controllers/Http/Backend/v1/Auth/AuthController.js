@@ -3,7 +3,6 @@
 const Event = use('Event')
 const Persona = use('Persona')
 const acceptLanguage = require('accept-language')
-const MeTransformer = use('App/Transformers/Backend/v1/MeTransformer')
 
 class AuthController {
   async login ({ auth, request, response }) {
@@ -53,7 +52,8 @@ class AuthController {
   async get ({ auth, request, transform }) {
     this._setLocalPreference(auth.user, request)
     this._setLastAction(auth.user)
-    return transform.item(auth.user, MeTransformer)
+
+    return transform.item(auth.user, 'App/Transformers/Backend/v1/MeTransformer')
   }
 
   async update ({ auth, request, transform }) {
@@ -63,7 +63,7 @@ class AuthController {
       await this._updateAccount(auth, request)
     }
 
-    return transform.item(auth.user, MeTransformer)
+    return transform.item(auth.user, 'App/Transformers/Backend/v1/MeTransformer')
   }
 
   async sendEmailVerification ({ auth, request, transform }) {

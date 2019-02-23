@@ -6,11 +6,11 @@ const TransformerAbstract = use('Adonis/Addons/Bumblebee/TransformerAbstract')
 const FileTransformer = use('App/Transformers/Public/v1/Modules/Media/FileTransformer')
 
 class ArticleTransformer extends TransformerAbstract {
-  availableInclude () {
+  static get availableInclude () {
     return ['content']
   }
 
-  defaultInclude () {
+  static get defaultInclude () {
     return ['attachments', 'cover']
   }
 

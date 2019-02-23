@@ -5,7 +5,7 @@ const Statistic = use('App/Models/Statistic')
 const TransformerAbstract = use('Adonis/Addons/Bumblebee/TransformerAbstract')
 
 class SettingTransformer extends TransformerAbstract {
-  availableInclude () {
+  static get availableInclude () {
     return [
       'stats'
     ]

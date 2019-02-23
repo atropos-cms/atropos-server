@@ -4,13 +4,13 @@ const TransformerAbstract = use('Adonis/Addons/Bumblebee/TransformerAbstract')
 const FileTransformer = use('App/Transformers/Public/v1/Modules/Media/FileTransformer')
 
 class GalleryController extends TransformerAbstract {
-  availableInclude () {
+  static get availableInclude () {
     return [
       'images'
     ]
   }
 
-  defaultInclude () {
+  static get defaultInclude () {
     return [
       'cover'
     ]

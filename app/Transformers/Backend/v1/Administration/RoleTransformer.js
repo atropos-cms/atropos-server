@@ -3,7 +3,7 @@
 const TransformerAbstract = use('Adonis/Addons/Bumblebee/TransformerAbstract')
 
 class RoleTransformer extends TransformerAbstract {
-  availableInclude () {
+  static get availableInclude () {
     return [
       'members',
       'permissions'

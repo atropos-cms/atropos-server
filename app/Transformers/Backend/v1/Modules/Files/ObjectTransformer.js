@@ -5,7 +5,7 @@ const moment = require('moment')
 const TransformerAbstract = use('Adonis/Addons/Bumblebee/TransformerAbstract')
 
 class ObjectTransformer extends TransformerAbstract {
-  availableInclude () {
+  static get availableInclude () {
     return [
       'preview'
     ]

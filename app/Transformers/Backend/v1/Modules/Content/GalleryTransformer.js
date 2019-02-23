@@ -4,13 +4,13 @@ const moment = require('moment')
 const TransformerAbstract = use('Adonis/Addons/Bumblebee/TransformerAbstract')
 
 class GalleryController extends TransformerAbstract {
-  availableInclude () {
+  static get availableInclude () {
     return [
       'images'
     ]
   }
 
-  defaultInclude () {
+  static get defaultInclude () {
     return [
       'cover'
     ]

@@ -5,7 +5,7 @@ const Statistic = use('App/Models/Statistic')
 const TransformerAbstract = use('Adonis/Addons/Bumblebee/TransformerAbstract')
 
 class TeamTransformer extends TransformerAbstract {
-  defaultInclude () {
+  static get defaultInclude () {
     return [
       'canRead',
       'canWrite',

@@ -4,7 +4,7 @@ const moment = require('moment')
 const TransformerAbstract = use('Adonis/Addons/Bumblebee/TransformerAbstract')
 
 class ListTransformer extends TransformerAbstract {
-  defaultInclude () {
+  static get defaultInclude () {
     return [
       'users',
       'roles'
